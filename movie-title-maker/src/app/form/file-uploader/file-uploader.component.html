@@ -1,41 +1,59 @@
 <!-- Permitir la selección de múltiples archivos -->
-<div class="border-[1px] border-gray-300 p-2 md:p-8 rounded-lg ">
-    <div
-        class="border-2 border-dashed rounded-lg p-8 text-center border-primary bg-primary/10 flex flex-col items-center justify-center">
-        <span class="material-icons text-gray-400" style="font-size: 48px;">upload_file</span>
+<div class="flex justify-center py-8">
+    <div class="
+    bg-white
+    border-[1px] rounded-lg
+    p-2 md:p-8 
+    w-11/12
+    lg:w-1/2
+    ">
+        <div class="border-2 border-dashed rounded-lg p-8 text-center border-primary bg-primary/20 flex flex-col items-center justify-center gap-4"
+            *ngIf="files.length === 0">
+            <span class="material-icons text-gray-400" style="font-size: 48px;">upload_file</span>
 
-        <p className="mt-2 text-sm text-gray-600">
-            Drag and drop files here, or
-            <label className="text-primary hover:text-primary/80 cursor-pointer">
-                browse
+            <p class="mt-2 text-sm text-gray-600">
+                Drag and drop files here, or
+                <label class="text-primary hover:text-primary/80 cursor-pointer">
+                    browse
 
+                </label>
+            </p>
+            <p class="text-xs text-gray-500 mt-1">
+                Supported formats: TXT, DOC, DOCX, PDF, XLS, XLSX
+            </p>
+            <label class="py-2 px-4 border-2 text-gray-600 text-sm hover:bg-gray-200 transition-colors duration-200 rounded-md cursor-pointer">
+                Upload Your Files
+                <input type="file" class="hidden" (change)="onChange($event)" #fileUpload multiple
+                accept=".txt,.docx,.pdf,.xlsx, .md, .xml, .json, .csv" />
             </label>
-        </p>
-        <p className="text-xs text-gray-500 mt-1">
-            Supported formats: TXT, DOC, DOCX, PDF, XLS, XLSX
-        </p>
-        <input type="file" class="file-input" (change)="onChange($event)" #fileUpload multiple
-            accept=".txt,.docx,.pdf,.xlsx, .md, .xml, .json, .csv" />
+        
+        </div>
+
+        <div *ngIf="files.length > 0">
+            <section class="p-4">
+                <h4 class="text-lg lg:text-4xl font-semibold">Uploaded files</h4>
+                <ul class="space-y-10 mt-8">
+                    <li *ngFor="let file of files; let i = index" class="flex flex-row items-center space-x-6">
+                        <img [src]="getFileIcon(file.name)" alt="{{file.name}} icon" class="file-icon w-10" />
+                        <p class="text-md text-gray-600">{{file.name}}</p>
+                    </li>
+                </ul>
+            </section>
+        </div>
     </div>
 </div>
-
-<div *ngIf="files.length > 0">
-    <section class="file-info">
-        <p>File details:</p>
-        <ul>
-            <li *ngFor="let file of files; let i = index" class="flex flex-row items-center space-x-6">
-                <img [src]="getFileIcon(file.name)" alt="{{file.name}} icon" class="file-icon w-10" />
-                <strong>{{file.name}}</strong>
-            </li>
-        </ul>
-    </section>
-
-    <button (click)="onUpload()">Upload All Files</button>
-
-    <section [ngSwitch]="status">
-        <p *ngSwitchCase="'uploading'">⏳ Uploading...</p>
-        <p *ngSwitchCase="'success'">✅ All files uploaded!</p>
-        <p *ngSwitchCase="'fail'">❌ Error uploading files!</p>
-        <p *ngSwitchDefault>😶 Waiting to upload...</p>
-    </section>
+<div class="flex justify-center w-11/12 lg:w-full space-x-10 md:space-x-96">
+    <label
+        class="py-2 px-4 bg-gray-800 hover:bg-gray-600 transition-colors duration-200 rounded-md text-white cursor-pointer">
+        Add More
+        <input type="file" class="hidden" multiple (change)="onChange($event)" />
+    </label>    
+    <a
+        routerLink="/edit"
+        class=" py-2 px-4 bg-gray-800 hover:bg-gray-600 transition-colors duration-200 rounded-md text-white hover:cursor-pointer"
+        [ngClass]="{
+            'bg-slate-200 text-gray-400 pointer-events-none' : files.length === 0
+        }"
+        >
+        Continue</a>
 </div>

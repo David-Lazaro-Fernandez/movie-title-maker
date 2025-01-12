@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-file-uploader',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './file-uploader.component.html',
   styleUrls: ['./file-uploader.component.css'],
 })
@@ -23,7 +23,7 @@ export class FileUploaderComponent {
 
     if (selectedFiles.length > 0) {
       this.status = 'initial';
-      this.files = selectedFiles;
+      this.files = [...this.files, ...selectedFiles];
     }
   }
 

@@ -1,0 +1,68 @@
+<!-- Contenedor principal -->
+<div class="flex justify-center pt-8">
+    <div class="w-1/2">
+        <div class="flex justify-between">
+          <!-- Recorremos los pasos -->
+          <div 
+            *ngFor="let step of steps; let i = index"
+            class="flex items-center cursor-pointer"
+            (click)="onStepClick(step.id)"
+          >
+            <!-- Icono circular (con número o check) -->
+            <div
+              class="
+                flex items-center justify-center w-8 h-8 rounded-full border-2
+              "
+              [ngClass]="{
+                'border-primary bg-primary text-white': currentStep === step.id,
+                'border-gray-300 bg-white': currentStep !== step.id
+              }"
+            >
+              <!-- Si el paso actual coincide con step.id, muestra el check; si no, muestra (i+1) -->
+              <ng-container *ngIf="currentStep === step.id; else showIndex">
+                <!-- Ícono Check (SVG) -->
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <!-- Lucide's "Check" path: M20 6L9 17l-5-5 -->
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+              </ng-container>
+      
+              <!-- Si NO es el paso actual, mostrar el índice (i+1) -->
+              <ng-template #showIndex>
+                <span>{{ i + 1 }}</span>
+              </ng-template>
+            </div>
+      
+            <!-- Título del paso -->
+            <span class="ml-2 text-sm font-medium hidden sm:inline">
+              {{ step.title }}
+            </span>
+      
+            <!-- ChevronRight (sólo si NO es el último paso) -->
+            <ng-container *ngIf="i < steps.length - 1">
+              <svg
+                class="w-4 h-4 mx-2 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <!-- Lucide's "ChevronRight" path: M9 5l7 7-7 7 -->
+                <path d="M9 5l7 7-7 7" />
+              </svg>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      
+</div>

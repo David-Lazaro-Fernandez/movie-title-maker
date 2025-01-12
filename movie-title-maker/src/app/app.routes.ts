@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ExportComponent } from './form/export/export.component';
-import { TitleStyleComponent } from './form/title-style/title-style.component';
+import { EditComponent } from './form/edit/edit.component';
 import { ImportComponent } from './form/import/import.component';
 
 export const routes: Routes = [
@@ -14,11 +14,11 @@ export const routes: Routes = [
         component: ImportComponent
     },
     {
-        path:'movie/title-style',
-        component: TitleStyleComponent
+        path:'edit',
+        component: EditComponent
     },
     {
-        path:'movie/export',
+        path:'export',
         component: ExportComponent
-    }
+    },
 ];

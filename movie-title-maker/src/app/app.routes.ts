@@ -10,7 +10,7 @@ export const routes: Routes = [
         component: HomeComponent
     },
     {
-        path:'movie/import',
+        path:'import',
         component: ImportComponent
     },
     {

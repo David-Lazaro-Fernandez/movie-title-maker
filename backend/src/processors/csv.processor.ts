@@ -17,7 +17,7 @@ export class CSVProcessor extends BaseFileProcessor {
             .filter((member): member is MovieTeamMember => member !== null);
           resolve(members);
         },
-        error: (error) => reject(error)
+        error: (error:Error) => reject(error)
       });
     });
   }

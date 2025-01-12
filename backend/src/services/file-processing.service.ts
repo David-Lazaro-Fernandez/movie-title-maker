@@ -1,7 +1,5 @@
 import { 
     FileProcessor, 
-    MovieTeamMember, 
-    ProcessingError, 
     ProcessingResult,
     FileProcessingConfig 
   } from '../types';
@@ -50,7 +48,7 @@ import {
           members: [],
           errors: [{
             fileName: file.originalname,
-            message: error.message,
+            message: (error as Error).message,
             type: 'PARSING'
           }]
         };

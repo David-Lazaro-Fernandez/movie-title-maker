@@ -1,9 +1,13 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "type": "module",
   "main": "src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tsc":"tsc",
+    "dev": "nodemon ts-node/esm server.ts",
+    "build": "tsc",
+    "watch": "tsc -w"
   },
   "keywords": [],
   "author": "",
@@ -11,7 +15,10 @@
   "description": "",
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0"
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
   },
   "dependencies": {
     "@types/multer": "^1.4.12",
@@ -20,6 +27,7 @@
     "express": "^4.21.2",
     "mammoth": "^1.9.0",
     "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.9",
     "papaparse": "^5.5.1",
     "xlsx": "^0.18.5"
   }

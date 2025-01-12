@@ -84,7 +84,7 @@ app.post('/process-files', upload.array('files'), async (req, res): Promise<void
       success: false,
       errors: [{
         fileName: 'server',
-        message: `Server error: ${error.message}`,
+        message: `Server error: ${error as Error}.message`,
         type: 'VALIDATION'
       }]
     });

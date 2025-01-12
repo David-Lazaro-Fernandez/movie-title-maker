@@ -1,0 +1,80 @@
+<header
+  class="
+    sticky top-0 z-50 w-full
+    border-b bg-background/95 supports-[backdrop-filter]:bg-background/60 backdrop-blur
+    px-8 md:px-40
+  "
+>
+  <div class="flex h-14 items-center">
+    <div class="flex mr-4">
+      <a
+        routerLink="/"
+        class="
+          flex items-center mr-6 space-x-2
+          link-style
+        "
+      >
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.25 21L9 5.25l7.5 15.75-3-6-4.5 9z"
+          ></path>
+        </svg>
+        <span class="hidden sm:inline-block font-bold">Movie Title Maker</span>
+      </a>
+    </div>
+
+    <div class="flex flex-1 items-center justify-between md:justify-end space-x-2">
+      <nav class="flex items-center space-x-6">
+        <a
+          routerLink="#about"
+          class="
+            text-sm font-medium
+            link-style
+          "
+          >About</a
+        >
+        <a
+          routerLink="#instructions"
+          class="
+            text-sm font-medium
+            link-style
+          "
+          >Instructions</a
+        >
+        <a
+          routerLink="#examples"
+          class="
+            text-sm font-medium
+            link-style
+          "
+          >Examples</a
+        >
+        <a
+          href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          class="
+            text-sm font-medium
+            link-style
+          "
+          >Learn More</a
+        >
+        <a
+          routerLink="movies/import"
+          class="
+            text-sm font-medium
+            link-style
+          "
+          >Learn More</a
+        >
+      </nav>
+    </div>
+  </div>
+</header>

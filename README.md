@@ -2,6 +2,12 @@
 
 A complete solution for creating professional movie titles and credits with ease. This repository contains both the application's frontend and backend components.
 
+
+
+https://github.com/user-attachments/assets/6b0dfaad-3ae2-40bb-8e4b-136c061a1a16
+
+
+
 ---
 
 ## 🏗️ Overview

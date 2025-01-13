@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './site-header.component.css'
 })
 export class SiteHeaderComponent {
-  isMenuOpen: boolean = false; // Controla si el menú está abierto
+  isMenuOpen: boolean = false;
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;

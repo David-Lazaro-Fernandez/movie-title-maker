@@ -1,1 +1,201 @@
-<p>title-style works!</p>
+<div class="min-h-screen bg-background p-8">
+
+    <div class="max-w-5xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Card: Style Settings -->
+      <div class="card bg-white border rounded-lg shadow">
+        <div class="card-header p-4 border-b">
+          <h2 class="card-title text-xl font-bold">Style Settings</h2>
+          <p class="card-description text-gray-600">
+            Customize the appearance of your movie credits
+          </p>
+        </div>
+        <div class="card-content p-4 space-y-6">
+          <!-- Background Color -->
+          <div class="space-y-2">
+            <label class="block font-medium">Background Color</label>
+            <div class="flex gap-2">
+              <input
+                type="color"
+                class="w-20 h-10"
+                [(ngModel)]="style.backgroundColor"
+                (ngModelChange)="onStyleChange()"
+              />
+              <input
+                type="text"
+                class="w-full border rounded p-2"
+                [(ngModel)]="style.backgroundColor"
+              />
+            </div>
+          </div>
+  
+          <!-- Role Styles Section -->
+          <div class="border-t pt-4">
+            <h3 class="font-medium mb-4">Role Styles</h3>
+            
+            <!-- Role Color -->
+            <div class="space-y-2">
+              <label class="block font-medium">Role Color</label>
+              <div class="flex gap-2">
+                <input
+                  type="color"
+                  class="w-20 h-10"
+                  [(ngModel)]="style.roleColor"
+                  (ngModelChange)="onStyleChange()"
+                />
+                <input
+                  type="text"
+                  class="w-full border rounded p-2"
+                  [(ngModel)]="style.roleColor"
+                />
+              </div>
+            </div>
+  
+            <!-- Role Font Size -->
+            <div class="space-y-2 mt-4">
+              <label class="block font-medium">
+                Role Font Size ({{ style.roleFontSize }}px)
+              </label>
+              <input
+                type="range"
+                class="w-full"
+                [min]="12"
+                [max]="72"
+                [step]="1"
+                [(ngModel)]="style.roleFontSize"
+                (ngModelChange)="onStyleChange()"
+              />
+            </div>
+          </div>
+  
+          <!-- Name Styles Section -->
+          <div class="border-t pt-4">
+            <h3 class="font-medium mb-4">Name Styles</h3>
+            
+            <!-- Name Color -->
+            <div class="space-y-2">
+              <label class="block font-medium">Name Color</label>
+              <div class="flex gap-2">
+                <input
+                  type="color"
+                  class="w-20 h-10"
+                  [(ngModel)]="style.nameColor"
+                  (ngModelChange)="onStyleChange()"
+                />
+                <input
+                  type="text"
+                  class="w-full border rounded p-2"
+                  [(ngModel)]="style.nameColor"
+                />
+              </div>
+            </div>
+  
+            <!-- Name Font Size -->
+            <div class="space-y-2 mt-4">
+              <label class="block font-medium">
+                Name Font Size ({{ style.nameFontSize }}px)
+              </label>
+              <input
+                type="range"
+                class="w-full"
+                [min]="12"
+                [max]="72"
+                [step]="1"
+                [(ngModel)]="style.nameFontSize"
+                (ngModelChange)="onStyleChange()"
+              />
+            </div>
+          </div>
+  
+          <!-- Common Settings -->
+          <div class="border-t pt-4">
+            <h3 class="font-medium mb-4">Common Settings</h3>
+            
+            <!-- Spacing Slider -->
+            <div class="space-y-2">
+              <label class="block font-medium">
+                Spacing ({{ style.spacing }}px)
+              </label>
+              <input
+                type="range"
+                class="w-full"
+                [min]="20"
+                [max]="100"
+                [step]="1"
+                [(ngModel)]="style.spacing"
+                (ngModelChange)="onStyleChange()"
+              />
+            </div>
+  
+            <!-- Font Family Select -->
+            <div class="space-y-2 mt-4">
+              <label class="block font-medium">Font Family</label>
+              <select
+                class="w-full border rounded p-2"
+                [(ngModel)]="style.font"
+              >
+                <option value="inter">Inter</option>
+                <option value="helvetica">Helvetica</option>
+                <option value="times">Times New Roman</option>
+                <option value="georgia">Georgia</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Card: Preview -->
+      <div class="card bg-white border rounded-lg shadow">
+        <div class="card-header p-4 border-b">
+          <h2 class="card-title text-xl font-bold">Preview</h2>
+          <p class="card-description text-gray-600">
+            Live preview with your styles
+          </p>
+        </div>
+        <div class="card-content p-4">
+          <div
+            [ngStyle]="{
+              'background-color': style.backgroundColor,
+              'padding': '2rem',
+              'border-radius': '0.5rem',
+              'min-height': '400px',
+              'font-family': style.font
+            }"
+            class="text-center space-y-6"
+          >
+            <ng-container *ngIf="credits.length > 0; else noCredits">
+              <div
+                *ngFor="let credit of credits"
+                [ngStyle]="{
+                  'margin-bottom.px': style.spacing
+                }"
+              >
+                <div [ngStyle]="{
+                  'color': style.roleColor,
+                  'font-size.px': style.roleFontSize
+                }">{{ credit.role }}</div>
+                <div [ngStyle]="{
+                  'color': style.nameColor,
+                  'font-size.px': style.nameFontSize,
+                  'margin-top': '0.5rem'
+                }">{{ credit.name }}</div>
+              </div>
+            </ng-container>
+            
+            <ng-template #noCredits>
+              <div class="text-gray-400">
+                No credits to preview. Please add credits in the previous step.
+              </div>
+            </ng-template>
+          </div>
+          <button
+            class="w-full mt-4 bg-blue-600 text-white rounded hover:bg-blue-500 transition-colors py-2"
+            (click)="goToExport()"
+            [disabled]="credits.length === 0"
+          >
+            Continue to Export
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

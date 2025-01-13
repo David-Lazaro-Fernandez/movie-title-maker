@@ -1,1 +1,74 @@
-<p>edit works!</p>
+<div class="min-h-screen bg-background p-8">
+    <div class="max-w-5xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Card: Edit Credits -->
+        <div class="card bg-white border rounded-lg shadow">
+            <div class="card-header p-4 border-b">
+                <h2 class="card-title text-xl font-bold">Edit Credits</h2>
+                <p class="card-description text-gray-600">Manage roles and names for your movie credits</p>
+            </div>
+            <div class="card-content p-4">
+                <div class="space-y-4">
+                    <div *ngFor="let credit of creditsData; let i = index" class="flex  items-center">
+                        <!-- Campo de selección para Role -->
+                        <div class="flex items-center gap-2">
+                            <div class="flex-1">
+                                <label class="block font-medium mb-1">Role</label>
+                                <select 
+                                class="w-full border rounded p-2" 
+                                [value]="credit?.role"
+                                (change)="handleRoleChange(i, $event)"
+                                    >
+                                    <option value="" disabled>Select role</option>
+                                    <option value="Director">Director</option>
+                                    <option value="Producer">Producer</option>
+                                    <option value="Writer">Writer</option>
+                                    <option value="Actor">Actor</option>
+                                    <option value="Cinematographer">Cinematographer</option>
+                                </select>
+                            </div>
+
+                            <!-- Campo de texto para Name -->
+                            <div class="flex-1">
+                                <label class="block font-medium mb-1">Name</label>
+                                <input 
+                                type="text" 
+                                class="w-full border rounded p-2" 
+                                [value]="credit?.name"
+                                (input)="handleNameChange(i, $event)"
+                                placeholder="Enter name" />
+                            </div>
+
+                            <!-- Botón para remover entry -->
+                            <button class="flex items-center justify-center w-12 h-11 border-[1px] border-gray-300 rounded-md p-2 hover:bg-gray-100 transition-colors duration-300 mt-8 text-gray-500" (click)="removeCredit(i)">
+                                x
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="border-[1px] border-gray-300 rounded-md p-2 hover:bg-gray-100 transition-colors duration-300" (click)="addCredit()">Add Credit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Preview -->
+        <div class="card bg-white border rounded-lg shadow">
+            <div class="card-header p-4 border-b">
+                <h2 class="card-title text-xl font-bold">Preview</h2>
+                <p class="card-description text-gray-600">Live preview of your movie credits</p>
+            </div>
+            <div class="card-content p-4">
+                <div class="bg-black text-white p-8 rounded min-h-[400px] text-center space-y-6">
+                    <div *ngFor="let credit of creditsData; let i = index">
+                        <ng-container *ngIf="credit.name">
+                            <div class="text-sm text-gray-400">{{ credit.role }}</div>
+                            <div class="text-xl">{{ credit.name }}</div>
+                        </ng-container>
+                    </div>
+                </div>
+                <button class="w-full py-3 mt-4 btn bg-blue-600 text-white rounded hover:bg-blue-500 transition-colors" (click)="continueToStyle()">
+                    Continue to Styling
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

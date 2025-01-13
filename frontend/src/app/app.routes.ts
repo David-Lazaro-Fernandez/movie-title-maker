@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { ExportComponent } from './form/export/export.component';
-import { EditComponent } from './form/edit/edit.component';
+import { WizardLayoutComponent } from './layouts/wizard-layout.component';
 import { ImportComponent } from './form/import/import.component';
+import { EditComponent } from './form/edit/edit.component';
+import { TitleStyleComponent } from './form/title-style/title-style.component';
+import { ExportComponent } from './form/export/export.component';
 
 export const routes: Routes = [
     {
@@ -10,15 +12,13 @@ export const routes: Routes = [
         component: HomeComponent
     },
     {
-        path:'import',
-        component: ImportComponent
-    },
-    {
-        path:'edit',
-        component: EditComponent
-    },
-    {
-        path:'export',
-        component: ExportComponent
-    },
+        path:'form',
+        component: WizardLayoutComponent,
+        children: [
+            { path: 'import', component: ImportComponent },
+            { path: 'edit', component: EditComponent },
+            { path: 'style', component: TitleStyleComponent },
+            { path: 'export', component: ExportComponent },
+        ]
+    }
 ];

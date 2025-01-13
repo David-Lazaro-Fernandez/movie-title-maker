@@ -1,4 +1,3 @@
-// controllers/fileController.ts
 import { Request, Response } from "express";
 import multer from "multer";
 import fsPromise from "fs/promises";
@@ -7,13 +6,11 @@ import mammoth from "mammoth";
 import pdf from 'pdf-parse';
 import * as XLSX from 'xlsx'
 
-// Types and Interfaces
 interface MovieTeamMember {
     name: string;
     role: string;
 }
 
-// Multer configuration for handling uploaded files
 const upload = multer({ dest: "uploads/" });
 
 /**
@@ -165,15 +162,15 @@ async function parsePdfFile(filePath: string): Promise<MovieTeamMember[]> {
         const fileBuffer = await fsPromise.readFile(filePath);
 
         const pdfData = await pdf(fileBuffer);
-        const lines = pdfData.text.split("\n"); // Split content by lines
+        const lines = pdfData.text.split("\n");
 
         return lines
             .map((line) => {
                 const [role, name] = line.split(",");
-                if (!role || !name) return null; // Skip invalid lines
+                if (!role || !name) return null;
                 return { role: role.trim(), name: name.trim() };
             })
-            .filter((member): member is MovieTeamMember => member !== null); // Filter out null values
+            .filter((member): member is MovieTeamMember => member !== null);
     } catch (error) {
         console.error("Error parsing PDF file:", error);
         throw error;
@@ -189,24 +186,16 @@ async function parsePdfFile(filePath: string): Promise<MovieTeamMember[]> {
  */
 async function parseExcelFile(filePath: string): Promise<MovieTeamMember[]> {
     try {
-        // Read the Excel file
         const fileBuffer = await fsPromise.readFile(filePath);
-
-        // Parse the workbook
         const workbook = XLSX.read(fileBuffer, { type: "buffer" });
-
-        // Get the first sheet
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
-
-        // Convert sheet to JSON
         const rows = XLSX.utils.sheet_to_json<{ role: string; name: string }>(sheet);
 
-        // Map rows to MovieTeamMember array
         return rows
             .map((row) => {
                 const { role, name } = row;
-                if (!role || !name) return null; // Skip invalid rows
+                if (!role || !name) return null;
                 return { role: role.trim(), name: name.trim() };
             })
             .filter((member): member is MovieTeamMember => member !== null);
@@ -252,16 +241,16 @@ function extractMovieTeamMembers(content: string): MovieTeamMember[] {
             
             const trimmedName = name.trim();
             const trimmedRole = role.trim();
-            const uniqueKey = `${trimmedRole}:${trimmedName}`; // Unique identifier
+            const uniqueKey = `${trimmedRole}:${trimmedName}`; 
             
             if (uniqueMembers.has(uniqueKey)) {
-                return null; // Skip duplicates
+                return null;
             }
             
-            uniqueMembers.add(uniqueKey); // Add to the set
+            uniqueMembers.add(uniqueKey);
             return { name: trimmedName, role: trimmedRole };
         })
-        .filter((member): member is MovieTeamMember => member !== null); // Filter out null values
+        .filter((member): member is MovieTeamMember => member !== null); 
 }
 
 /**
@@ -272,17 +261,17 @@ function extractMovieTeamMembers(content: string): MovieTeamMember[] {
  * @returns A new array of unique MovieTeamMember objects
  */
 function verifyNoRepeatedMembers(movieTeam: MovieTeamMember[]): MovieTeamMember[] {
-    const uniqueMembers = new Set<string>(); // Tracks unique members as "role:name"
+    const uniqueMembers = new Set<string>(); 
 
     return movieTeam.filter((member) => {
-        const uniqueKey = `${member.role.trim()}:${member.name.trim()}`; // Unique identifier
+        const uniqueKey = `${member.role.trim()}:${member.name.trim()}`;
 
         if (uniqueMembers.has(uniqueKey)) {
-            return false; // Skip duplicates
+            return false;
         }
 
-        uniqueMembers.add(uniqueKey); // Add to the set
-        return true; // Include unique member
+        uniqueMembers.add(uniqueKey);
+        return true;
     });
 }
 

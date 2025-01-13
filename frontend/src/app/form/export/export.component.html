@@ -1,1 +1,62 @@
-<p>export works!</p>
+<div class="min-h-screen bg-background p-8">
+    <div class="max-w-3xl mx-auto mt-8">
+      <div class="card bg-white border rounded-lg shadow">
+        <div class="card-content p-4">
+          <div class="space-y-6">            
+            <div>
+                <a href="/form/import" class=" hover:bg-blue-800 transition flex items-center gap-2 bg-blue-600 text-white rounded-md p-2 w-full lg:w-fit">
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 24 24" 
+                        fill="currentColor" 
+                        width="24" 
+                        height="24"
+                        >
+                        <path d="M10.828 4.586a1 1 0 010 1.414L5.828 11H20a1 1 0 110 2H5.828l5 5a1 1 0 11-1.414 1.414l-6.707-6.707a1 1 0 010-1.414l6.707-6.707a1 1 0 011.414 0z"/>
+                    </svg>
+                    Generate another one! 
+                </a>
+              </div>
+            <div class="mt-8 p-4 bg-muted rounded-lg">
+              
+                <h3 class="font-semibold mb-2">Export Preview</h3>
+              <div 
+                #previewContainer
+                class="aspect-video rounded-lg flex items-center justify-center p-4"
+                [ngStyle]="{
+                  'background-color': style .backgroundColor,
+                  'font-family': style.font
+                }"
+              >
+                <div class="text-center space-y-6">
+                  <ng-container *ngFor="let credit of credits">
+                    <div [ngStyle]="{ 'margin-bottom.px': style.spacing }">
+                      <div [ngStyle]="{
+                        'color': style.roleColor,
+                        'font-size.px': style.roleFontSize
+                      }">{{ credit.role }}</div>
+                      <div [ngStyle]="{
+                        'color': style.nameColor,
+                        'font-size.px': style.nameFontSize,
+                        'margin-top': '0.5rem'
+                      }">{{ credit.name }}</div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Add download button -->
+            <button 
+              class="mt-4 w-full bg-blue-600 text-white rounded hover:bg-blue-500 transition-colors py-2"
+              (click)="handleExport()"
+              [disabled]="credits.length === 0"
+            >
+              Download as {{ format.toUpperCase() }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

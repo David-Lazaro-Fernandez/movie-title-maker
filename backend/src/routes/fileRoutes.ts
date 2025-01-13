@@ -5,7 +5,7 @@ const router = Router();
 
 router.post(
   "/upload",
-  fileProcessorController.upload.array("files"), // Para recibir múltiples archivos
+  fileProcessorController.upload.array("files"), 
   fileProcessorController.processFiles
 );
 

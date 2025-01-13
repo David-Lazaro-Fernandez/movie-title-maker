@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// Define aquí tu tipo de pasos
 export type WizardStep = 'upload' | 'preview' | 'edit' | 'final';
 
 @Component({
@@ -11,13 +10,12 @@ export type WizardStep = 'upload' | 'preview' | 'edit' | 'final';
   
 })
 export class WizardComponent {
-  // Equivale a "currentStep" en React
   @Input() currentStep: WizardStep = 'upload';
 
-  // Equivale a "onStepChange" en React
   @Output() stepChange = new EventEmitter<WizardStep>();
 
-  // Pasos fijos (puedes parametrizarlos con un @Input() steps: WizardStepDefinition[] si quieres)
+  public visitedSteps = new Set<WizardStep>(['upload']);
+
   steps = [
     { id: 'upload' as WizardStep, title: 'Upload Files' },
     { id: 'preview' as WizardStep, title: 'Preview Data' },
@@ -25,8 +23,19 @@ export class WizardComponent {
     { id: 'final' as WizardStep, title: 'Final Preview' }
   ];
 
-  // Función que se llama al hacer clic en cada paso
   onStepClick(stepId: WizardStep) {
+    const clickedIndex = this.steps.findIndex(step => step.id === stepId);
+    
+    this.steps.forEach((step, index) => {
+      if (index <= clickedIndex) {
+        this.visitedSteps.add(step.id);
+      }
+    });
+    
     this.stepChange.emit(stepId);
+  }
+
+  public isStepVisited(stepId: WizardStep): boolean {
+    return this.visitedSteps.has(stepId);
   }
 }

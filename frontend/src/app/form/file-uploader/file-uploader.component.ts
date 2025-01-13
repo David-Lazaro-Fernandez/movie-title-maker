@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CreditsService } from '../../services/credits/credits.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-file-uploader',
   standalone: true,
@@ -9,15 +11,18 @@ import { RouterLink } from '@angular/router';
   templateUrl: './file-uploader.component.html',
   styleUrls: ['./file-uploader.component.css'],
 })
-export class FileUploaderComponent {
-  status: 'initial' | 'uploading' | 'success' | 'fail' = 'initial'; // Variable para estado
-  files: File[] = []; // Lista de archivos seleccionados
 
-  constructor(private http: HttpClient) { }
+export class FileUploaderComponent {
+  status: 'initial' | 'uploading' | 'success' | 'fail' = 'initial';
+  files: File[] = []; 
+
+  constructor(
+    private creditsService:CreditsService,
+    private router:Router
+  ) { }
 
   ngOnInit(): void { }
 
-  // Manejar selección de archivos
   onChange(event: any) {
     const selectedFiles = Array.from(event.target.files) as File[];
 
@@ -27,36 +32,34 @@ export class FileUploaderComponent {
     }
   }
 
-  // Subir todos los archivos
   onUpload() {
     if (this.files.length === 0) {
       return;
     }
-
-    this.status = 'uploading';
-    const uploadRequests = this.files.map((file) => {
-      const formData = new FormData();
-      formData.append('file', file);
-
-      // Enviar solicitud para subir cada archivo
-      return this.http.post('/upload', formData).toPromise();
+  
+    this.status = 'uploading'; 
+  
+    const formData = new FormData();
+    this.files.forEach((file) => {
+      formData.append('files', file);
     });
-
-    // Manejar todas las solicitudes de subida
-    Promise.all(uploadRequests)
-      .then(() => {
+  
+    this.creditsService.uploadCredits(formData).subscribe({
+      next: (response) => {
         this.status = 'success';
-      })
-      .catch(() => {
+        console.log('Respuesta del servidor:', response);
+        
+        this.router.navigate(['/form/edit']);
+      },
+      error: (error) => {
+        console.error('Error al subir los archivos:', error);
         this.status = 'fail';
-      });
+      },
+    });
   }
 
-  /**
-   * Función para obtener el ícono basado en la extensión del archivo
-   */
   getFileIcon(fileName: string): string {
-    const extension = fileName.split('.').pop()?.toLowerCase(); // Obtener la extensión del archivo
+    const extension = fileName.split('.').pop()?.toLowerCase(); 
     const iconMap: { [key: string]: string } = {
       csv: 'assets/icons/CSV.png',
       docx: 'assets/icons/DOCX.png',
@@ -68,6 +71,6 @@ export class FileUploaderComponent {
       xml: 'assets/icons/XML.png',
     };
 
-    return iconMap[extension || ''] || 'assets/icons/default.png'; // Devuelve un ícono por defecto si no hay coincidencia
+    return iconMap[extension || ''] || 'assets/icons/default.png';
   }
 }

@@ -15,11 +15,12 @@
               "
               [ngClass]="{
                 'border-primary bg-primary text-white': currentStep === step.id,
-                'border-gray-300 bg-white': currentStep !== step.id
+                'border-gray-300 bg-black text-white': isStepVisited(step.id),
+                'border-gray-300 bg-white': !isStepVisited(step.id) && currentStep !== step.id
               }"
             >
-              <!-- Si el paso actual coincide con step.id, muestra el check; si no, muestra (i+1) -->
-              <ng-container *ngIf="currentStep === step.id; else showIndex">
+              <!-- Si el paso actual coincide con step.id o si estamos en 'export' y es un paso anterior, muestra el check -->
+              <ng-container *ngIf="isStepVisited(step.id); else showIndex">
                 <!-- Ícono Check (SVG) -->
                 <svg
                   class="w-4 h-4"

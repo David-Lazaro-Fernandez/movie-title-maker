@@ -121,6 +121,12 @@ npm start
 
 ---
 
+## 📚 Documentation
+
+API documentation is available at `/api-docs` when the server is running.
+
+---
+
 ## 🔒 Security
 
 - File type validation  

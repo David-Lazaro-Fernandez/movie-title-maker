@@ -90,16 +90,6 @@ The build artifacts will be stored in the `dist/movie-title-maker` directory.
 
 ---
 
-## 🧪 Running Tests
-
-Execute unit tests with:
-
-```bash
-npm test
-```
-
----
-
 ## 📝 Application Flow
 
 1. **Home Page**: Learn about the app and explore its features.  
